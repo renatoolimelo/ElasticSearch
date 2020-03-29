@@ -16,4 +16,265 @@ GET filmes/_count
 
 GET filmes/_search/?q=harry+potter
 
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
 
+POST catalogo/_doc/
+{
+  "nome": "João Silva",
+  "interesses": ["futebol", "música", "literatura"],
+  "cidade": "São Paulo",
+  "formação": "Letras",
+  "estado": "SP",
+  "país": "Brasil"
+}
+
+GET catalogo/_count
+
+POST catalogo/_doc/1
+{
+    "nome": "João Silva",
+    "interesses": ["futebol", "música", "literatura"],
+    "cidade": "São Paulo",
+    "formação": "Letras",
+    "estado": "SP",
+    "país": "Brasil"
+}
+
+GET catalogo/_doc/1
+
+GET catalogo/_search
+
+GET catalogo/_search/?q=futebol
+
+POST filmes/_doc
+{ "nome": "Harry Potter e a Pedra Filosofal", "ano": 2001 }
+
+POST filmes/_doc/2
+{ "nome": "Harry Potter e a Câmara Secreta", "ano": 2002}
+
+POST filmes/_doc
+{ "nome": "Harry Potter e o Prisioneiro de Azkaban", "ano": 2004}
+
+POST filmes/_doc/4
+{ "nome": "Harry Potter e o Cálice de Fogo", "ano": 2005}
+
+GET filmes/_search
+
+GET filmes/_count
+
+GET filmes/_search/?q=harry+potter
+
+HEAD catalogo/_doc/1
+
+HEAD filmes/_doc/4
+
+PUT catalogo/_doc/50
+{
+  "nome": "Marcelo Oliveira",
+  "Interesses": [
+    "cinema",
+    "música",
+    "programação"],
+    "cidade": "São Paulo",
+    "formação": "Tecnologia da Informação",
+    "estado": "SP",
+    "país": "Brasil"
+}
+
+PUT catalogo/_doc/50
+{
+  "nome": "Marcelo Ricardo de Oliveira",
+  "Interesses": [
+    "cinema",
+    "música",
+    "programação"],
+    "cidade": "São Paulo",
+    "formação": "Tecnologia da Informação",
+    "estado": "SP",
+    "país": "Brasil"
+}
+
+GET catalogo/_doc/50
+
+GET catalogo/_doc/1
+
+DELETE catalogo/_doc/1
+
+POST catalogo/_update/50
+{
+  "doc": {"nome": "Marcelo R. Oliveira"}
+}
+
+GET catalogo/_doc/50
+
+GET catalogo/_search/?q=futebol
+
+GET catalogo/_search/?q=estado:SP
+
+GET catalogo/_search/?q=estado:futebol
+
+
+GET catalogo/_search/?q=nome:João Silva
+
+GET catalogo/_search/?q=futebol&size=10&from=0
+
+GET catalogo/_mapping
+
+PUT /catalogo/_doc/1
+{
+  "nome": "Patrick von Steppat",
+  "interesses": [
+    "computação",
+    "culinária",
+    "cinema"
+  ],
+  "cidade": "Rio de Janeiro",
+  "formação": "Gastronomia",
+  "estado": "RJ",
+  "país": "Brasil"
+}
+
+PUT /catalogo/_doc/1
+{
+  "nome": "Patrick von Steppat 2",
+  "interesses": [
+    "computação",
+    "culinária",
+    "cinema"
+  ],
+  "cidade": "Rio de Janeiro",
+  "formação": "Gastronomia",
+  "estado": "RJ",
+  "país": "Brasil",
+  "nascimento": "1984-10-03T12:00:00Z"
+}
+
+
+GET catalogo/_doc/1
+
+GET catalogo/_mapping
+
+
+POST catalogo/_doc
+{
+  "nome": "Super Mario",
+  "interesses": [
+    "computação",
+    "games",
+    "carros"
+  ],
+  "força": 3,
+  "velocidade": 55.3,
+  "cidade": "Kyoto",
+  "formação": "Encanador",
+  "estado": "Honshu",
+  "país": "Japão",
+  "nascimento": "1982-01-21"
+}
+
+
+PUT catalogo/_mapping/
+{
+    "properties": {
+        "pulo": {
+            "type": "integer"
+        }
+    }
+}
+
+GET catalogo/_search/?q=musica
+
+GET catalogo/_search/?q=música
+
+GET catalogo/_analyze
+{
+  "text": "Eu nasci há 10 mil (sim, isso mesmo, 10 mil) anos atrás"
+}
+
+
+GET catalogo/_analyze
+{
+  "analyzer": "simple", 
+  "text": "Eu nasci há 10 mil (sim, isso mesmo, 10 mil) anos atrás"
+}
+
+
+GET catalogo/_analyze
+{
+  "analyzer": "whitespace", 
+  "text": "Eu nasci há 10 mil (sim, isso mesmo, 10 mil) anos atrás"
+}
+
+GET catalogo/_analyze
+{
+  "analyzer": "portuguese", 
+  "text": "Eu nasci há 10 mil (sim, isso mesmo, 10 mil) anos atrás"
+}
+
+PUT /catalogo_v2
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 3,
+      "number_of_replicas": 0
+    }
+  },
+  "mappings": {
+    "properties": {
+      "cidade": {
+        "type": "text",
+        "index": true,
+        "analyzer": "portuguese"
+      },
+      "estado": {
+        "type": "text"
+      },
+      "formação": {
+        "type": "text",
+        "index": true,
+        "analyzer": "portuguese"
+      },
+      "interesses": {
+        "type": "text",
+        "index": true,
+        "analyzer": "portuguese"
+      },
+      "nome": {
+        "type": "text",
+        "index": true,
+        "analyzer": "portuguese"
+      },
+      "país": {
+        "type": "text",
+        "index": true,
+        "analyzer": "portuguese"
+      }
+    }
+  }
+}
+
+
+POST /catalogo_v2/_doc/1
+{
+    "nome": "João Silva",
+    "interesses": ["futebol", "música", "literatura"],
+    "cidade": "São Paulo",
+    "formação": "Letras",
+    "estado": "SP",
+    "país": "Brasil"
+}
+
+GET catalogo/_search/?q=música
+
+GET catalogo_v2/_search/?q=música
+
+GET catalogo_v2/_search/?q=musica
+
+GET catalogo_v2/_search/?q=Música
+
+GET /catalogo_v2/_search?q=musica+AND+brasil
