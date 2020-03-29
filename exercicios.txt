@@ -1,3 +1,21 @@
+sudo systemctl status elasticsearch.service
+sudo systemctl start elasticsearch.service
+sudo -i service kibana start
+
+echo $JAVA_HOME
+ls /usr/lib/jvm/java-8-openjdk-amd64/
+sudo vi /etc/environment
+source /etc/environment
+echo $JAVA_HOME
+sudo apt-get install apt-transport-https 
+sudo apt-get install gpg
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo add-apt-repository "deb https://artifacts.elastic.co/packages/7.x/apt stable main"
+sudo apt update
+sudo apt upgrade
+
+
+
 POST filmes/_doc
 { "nome": "Harry Potter e a Pedra Filosofal", "ano": 2001 }
 
